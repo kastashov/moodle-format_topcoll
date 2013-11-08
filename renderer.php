@@ -632,6 +632,11 @@ class format_topcoll_renderer extends format_section_renderer_base {
                 $weekdate -= 7200;                 // Subtract two hours to avoid possible DST problems.
             }
 
+            // If layoutcolumnorientation is not set (the course is restored or otherwise, set it to default.
+            if (!$this->tcsettings['layoutcolumnorientation']) {
+                $this->tcsettings['layoutcolumnorientation'] = get_config('format_topcoll', 'defaultlayoutcolumnorientation');
+            }
+
             if ($numsections < $this->tcsettings['layoutcolumns']) {
                 $this->tcsettings['layoutcolumns'] = $numsections;  // Help to ensure a reasonable display.
             }
@@ -789,7 +794,7 @@ class format_topcoll_renderer extends format_section_renderer_base {
                 }
 
                 if ($this->mobiletheme === false) { // Only break in non-mobile themes.
-                    if ($this->tcsettings['layoutcolumnorientation'] == 1) {  // Only break columns in horizontal mode.
+                    if ($this->tcsettings['layoutcolumnorientation'] == 1) {  // Only break columns in vertical mode.
                         if (($canbreak == false) && ($currentsectionfirst == false) && ($showsection == true)) {
                             $canbreak = true;
                             $columnbreakpoint = ($shownsectioncount + ($numsections / $this->tcsettings['layoutcolumns'])) - 1;
